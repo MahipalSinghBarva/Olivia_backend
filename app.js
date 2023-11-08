@@ -4,7 +4,7 @@ const bodyParser = require("body-parser")
 const fileUpload = require("express-fileupload")
 const errorMiddleWare = require('./middleware/error')
 const cookieParser = require("cookie-parser")
-// const dotenv = require('dotenv')
+const dotenv = require('dotenv')
 const path = require('path')
 
 app.use(express.json({ limit: '1000mb' }))
@@ -17,8 +17,9 @@ app.use(bodyParser.json({ limit: '1000mb' }));
 //     require("dotenv").config({path:'backend/config/config.env'})
 // }
 
+dotenv.config({path:'.env'})
 
-// app.use(express.static("dist"))
+app.use(express.static("build"))
 
 // route import
 const product = require("./route/productRoute")
@@ -32,11 +33,11 @@ app.use("/api/v1", user)
 app.use("/api/v1", order)
 app.use("/api/v1", payment)
 
-// app.use(express.static(path.join(__dirname, "../frontend/build")))
+app.use(express.static(path.join(__dirname, "./build")))
 
-// app.get("*", (req, res)=>{
-//     res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"))
-// })
+app.get("*", (req, res)=>{
+    res.sendFile(path.resolve(__dirname, "./build/index.html"))
+})
 
 // middleware for error
 app.use(errorMiddleWare)

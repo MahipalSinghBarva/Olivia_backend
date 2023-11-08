@@ -1,7 +1,9 @@
 const app = require('./app')
-// const dotenv = require('dotenv')
+const dotenv = require('dotenv')
 const connectDB = require('./config/db')
 const cloudinary = require("cloudinary")
+const path = require('path')
+
 
 // handling uncaught execption
 process.on('uncaughtException',(err)=>{
@@ -11,9 +13,15 @@ process.on('uncaughtException',(err)=>{
 })
 
 // if(process.env.NODE_ENV !== "PRODUCTION"){
-//     require("dotenv").config({path:'backend/config/config.env'})
+//     require("dotenv").config({path:'backend/.env'})
 // }
 
+dotenv.config({path:'.env'})
+// if (result.error) {
+//     console.error('Error loading config.env:', result.error);
+//   } else {
+//     console.log('Environment variables loaded successfully:', process.env);
+//   }
 
 connectDB()
 
@@ -24,10 +32,12 @@ cloudinary.config({
 })
 
 app.listen(process.env.PORT,()=>{
-    console.log(`Server is working on http://localhost:${process.env.PORT}`);
+    console.log(`Server is working on PORT:${process.env.PORT}`);
 })
 
-
+// app.listen(8080,()=>{
+//     console.log(`Server is working on http://localhost:8080`);
+// })
 
 // unhandle promise rejection
 process.on('unhandledRejection',(err)=>{
